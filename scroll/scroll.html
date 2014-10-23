@@ -8,69 +8,87 @@
         $(function(){
             var arr = [];
             var box = $("#scroll_box");
+            //先查找box里拥有的step步数，放进arr这个数组
             box.find("li.scroll_item").each(function(index,value){
                arr.push($(this).offset().top);
             });
             console.log(arr);
+            //计算序号的index
             var computeLeftIndex = function(){
                 var index = -1;
+                //获取当前滚动的top值
                 var top = $(document).scrollTop();
                 var group = $("#ico-group-0");
-                var box = $("#scroll_box");
 
+                //判断什么时候隐藏
                 if(top<arr[0]){
+                    //隐藏group
                     group.find(".list-icon-link").attr("style","display:none");
+                    //显示所有的box里的index
                     box.find(".scroll_item").find(".list-icon").attr("style","display:block");
                     return ;
                 }
+                //循环判断滚动的top所处的arr的位置，当arr[i]-i*index高度>top时break，确定当前的index
+                //如果top在arr的n到n+1之间，那么index就是n
                 for(var i=0;i<arr.length;i++){
                     if(top<arr[i]-i*32){
                         index = i;
                         break;
                     }
                 }
+                console.log("top："+top+"，index:"+index);
+                //控制需要隐藏的index
                 var hiddenIndex = 0;
                 var num =0;
+                //判断是否初始值，如果是初始的值，那么index超出了arr所拥有的个数
                 if(index==-1){
+                    //当超出的时候就设为arr的长度
                     index = arr.length;
-
+                    //获取序号为index的DOM节点
                     var current = box.find(".scroll_item:eq("+(index-1)+")");
+                    //获取current的显示高度加上当前的icon高度，减去滚动的高度，除以icon的高度，来计算能承载的icon个数
                     num = Math.floor((current.offset().top+current.height()-top)/32);
+                    //根据能承受的个数来确定隐藏的hiddenIndex，譬如arr为7，能承载3个，那么index就是4，需要隐藏小于4的icon
                     hiddenIndex = arr.length-num<0?0:arr.length-num;
 
                 }
+                //position为arr的下标，也就是dom的实际的index
                 var position = index-1;
 
+                //小于position的icon显示，大于position的icon隐藏
                 group.find(".list-icon-link:lt("+position+")").attr("style","display:block");
                 group.find(".list-icon-link:gt("+position+")").attr("style","display:none");
 
+                //设置所有的icon不是当前序号
                 group.find(".list-icon-link").removeClass("list-icon-current");
+                //设置当前序号的icon为选中状态
                 group.find(".list-icon-link:eq("+position+")").addClass("list-icon-current").attr("style","display:block");
 
 
+                //如果隐藏的hiddenIndex>=arr的长度，那么全部隐藏group中的icon
                 if(hiddenIndex >= arr.length){
                     group.find(".list-icon-link").attr("style","display:none");
                 }else{
+                    //小于隐藏index的需要进行隐藏
                     group.find(".list-icon-link:lt("+hiddenIndex+")").attr("style","display:none");
                 }
 
 
 
                 console.log(index);
+                //设置box中小于index的隐藏，大于index的显示，等于index的显示
                 box.find(".scroll_item:lt("+index+")").find(".list-icon").attr("style","display:none");
                 box.find(".scroll_item:gt("+index+")").find(".list-icon").attr("style","display:block");
                 box.find(".scroll_item:eq("+index+")").find(".list-icon").attr("style","display:block");
             };
             $(window).resize(function(e){
-                console.log("111");
-                $("#order-group").css("left",box.offset().left-18);
-
+                $("#order-group").css("left",box.offset().left-16);
             });
 
             $(document).scroll(function(e){
-                $("#order-group").css("left",box.offset().left-18);
+                $("#order-group").css("left",box.offset().left-16);
                 computeLeftIndex();
-
+                //点击跳转scroll位置
                 $("#ico-group-0").find("a").click(function(e){
                     e.preventDefault();
                     var index = $(this).html();
@@ -146,14 +164,15 @@
             width: 32px;
             visibility: visible;
             position: fixed;
-            top: 0;
+            top: 0px;
             left: -10000px;
             z-index:10000;
         }
     </style>
 </head>
 <body>
-<div style="height:50px">top info</div>
+<!--<div style="position:fixed;top:0;height:50px;width:100%;background: darkred;z-index:10000;">1</div>-->
+<div style="height:100px">top info</div>
 <div class="scroll_wrapper">
     <div id="order-group">
         <div class="order-ico-group" id="ico-group-0" style="display: block;">
