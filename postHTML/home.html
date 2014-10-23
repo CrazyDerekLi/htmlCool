@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        body{
+            padding: 0;
+            margin: 0;
+            font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", STHeiti !important;
+        }
+        a:link,a:visited,a:active{
+            color: #778087;
+            text-decoration: none;
+        }
+        a:hover{
+            color: #4d5256;
+            text-decoration: underline;
+        }
+        strong, b {
+            font-weight: bold;
+        }
+        #body-header{
+            background-image: url("images/top_light.png");
+            text-align: center;
+            background-color: #f0f0f0;
+            height: 44px;
+            font-size: 15px;
+            font-weight: 500;
+            background-size: 44px 44px;
+        }
+        #body-wrapper{
+            text-align: center;
+            background-color: #e2e2e2;
+            background-image: url("images/shadow_light.png");
+            background-repeat: repeat-x;
+        }
+        #body-footer{
+            border-top: 1px solid #ccc;
+            background-color: #fff;
+            text-align: center;
+            color: #999;
+        }
+
+        .content{
+            width: 970px;
+            margin: 0 auto 0 auto;
+        }
+        a.top-logo{
+            float:left;
+            display: block;
+            font-size: 22px;
+            font-weight: bold;
+            color:#000;
+            text-decoration: none;
+        }
+        .top-btn{
+            float: right;
+            font-size: 15px;
+        }
+        a.top-a{
+            color: #556;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+        a.top-a:hover{
+            color: #99a;
+            text-decoration: none;
+        }
+
+        .c{
+            clear:both;
+        }
+        .h5{
+            height: 5px;
+        }
+        .h20{
+            height: 20px;
+        }
+
+
+        #right-bar{
+            width:270px;
+            float: right;
+        }
+        #left-bar{
+            width:270px;
+            float: left;
+        }
+        #main-content{
+            width: auto;
+            margin: 0 290px 0 0;
+        }
+        .box{
+            background-color: #fff;
+            border-radius: 3px;
+            box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid #e2e2e2;
+        }
+        .box-inner{
+            padding: 10px;
+            font-size: 12px;
+            line-height: 150%;
+            text-align: left;
+        }
+        .box-cell{
+            padding: 10px;
+            font-size: 12px;
+            line-height: 120%;
+            text-align: left;
+            border-bottom: 1px solid #e2e2e2;
+        }
+        .box-item{
+            background-position: 0 bottom;
+            background-repeat: repeat-x;
+        }
+
+        a.tab{
+            display: inline-block;
+            font-size: 13px;
+            line-height: 13px;
+            padding: 5px 8px 5px 8px;
+            margin-right: 5px;
+            border-radius: 3px;
+            color: #555;
+        }
+        a.tab:hover{
+            background-color: #f5f5f5;
+            color: #000;
+            text-decoration: none;
+        }
+        a.tab_current{
+            display: inline-block;
+            font-size: 13px;
+            line-height: 13px;
+            padding: 5px 8px 5px 8px;
+            margin-right: 5px;
+            border-radius: 3px;
+            background-color: #334;
+            color: #fff;
+        }
+        a.node{
+            margin-right: 10px;
+        }
+
+
+        img.box-avatar{
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+        }
+        .box-item-title{
+            font-size: 16px;
+            line-height: 130%;
+            text-shadow: 0 1px 0 #fff;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+        .box-small{
+            font-size: 11px;
+        }
+        .box-fade{
+            color: #ccc;
+        }
+
+        .box-votes {
+            display: inline-block;
+        }
+
+
+        a.box-node:link, a.box-node:visited, a.box-node:active {
+            background-color: #f5f5f5;
+            font-size: 10px;
+            line-height: 10px;
+            display: inline-block;
+            padding: 4px 4px 4px 4px;
+            -moz-border-radius: 2px;
+            -webkit-border-radius: 2px;
+            border-radius: 2px;
+            text-decoration: none;
+            color: #999;
+        }
+        a.box-node:hover {
+            text-decoration: none;
+            background-color: #e2e2e2;
+            color: #777;
+        }
+
+        a.box-count-livid:link, a.box-count-livid:active {
+            line-height: 12px;
+            font-weight: bold;
+            color: white;
+            background-color: #aab0c6;
+            display: inline-block;
+            padding: 2px 10px 2px 10px;
+            -moz-border-radius: 12px;
+            -webkit-border-radius: 12px;
+            border-radius: 12px;
+            text-decoration: none;
+            margin-right: 5px;
+            word-break: keep-all;
+        }
+        a.box-count-livid:visited {
+            line-height: 12px;
+            font-weight: bold;
+            color: white;
+            background-color: #e5e5e5;
+            display: inline-block;
+            padding: 2px 10px 2px 10px;
+            -moz-border-radius: 12px;
+            -webkit-border-radius: 12px;
+            border-radius: 12px;
+            text-decoration: none;
+            margin-right: 5px;
+        }
+        a.box-count-livid:hover {
+            line-height: 12px;
+            font-weight: bold;
+            color: white;
+            background-color: #969cb1;
+            display: inline-block;
+            padding: 2px 10px 2px 10px;
+            -moz-border-radius: 12px;
+            -webkit-border-radius: 12px;
+            border-radius: 12px;
+            text-decoration: none;
+        }
+        .box-chevron {
+            font-family: "Lucida Grande";
+            font-weight: 500;
+        }
+        .box-fr {
+            float: right;
+            text-align: right;
+        }
+        .normal.button {
+            background-color: #fff;
+            color: #333;
+            text-shadow: 0 1px 0 #fff;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 1px 0 rgba(66, 66, 77, 0.1);
+        }
+        .super.button {
+            background-image: url("images/bg_blended_light.png");
+            padding: 4px 15px 4px 15px;
+            border: 1px solid rgba(80,80,90, 0.2);
+            border-bottom-color: rgba(80,80,90, 0.35);
+            border-radius: 3px;
+            font-size: 12px;
+            line-height: 12px;
+            outline: none;
+        }
+        .normal.button:hover {
+            background-color: #f9f9f9;
+            border: 1px solid rgba(60,60,70,0.3);
+            color: #333;
+            text-shadow: 0 1px 0 #fff;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 1px 0 rgba(66, 66, 77, 0.1);
+        }
+        .fl{
+            float: left;
+        }
+        .fr{
+            float: right;
+        }
+    </style>
+</head>
+<body>
+    <div id="body-header">
+        <div class="content">
+            <div style="padding-top: 6px;line-height: 32px;">
+                <a href="#" class="top-logo">Blue House</a>
+                <div class="top-btn">
+                    <a href="#" class="top-a">首页</a>
+                    <a href="#" class="top-a">注册</a>
+                    <a href="#" class="top-a">登录</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="body-wrapper">
+        <div class="content">
+            <div id="right-bar">
+                <div class="h20"></div>
+                <div class="box">
+                    <div class="box-cell">
+                        <strong>蓝房子</strong>
+                        <div class="box-fade">
+                            蓝房子介绍
+                        </div>
+                    </div>
+                    <div class="box-inner">
+                        用户个人信息
+                    </div>
+                </div>
+                <div class="h20"></div>
+                <div class="box">
+                    <div class="box-cell">
+                        <strong>清除屏蔽</strong>
+                    </div>
+                    <div class="box-cell">
+                        <div style="text-align: center">
+                            <a href="#" class="super normal button">一键清除节点屏蔽</a>
+                        </div>
+                    </div>
+                    <div class="box-cell">
+                        <div style="text-align: center">
+                            <a href="#" class="super normal button">一键清除帖子屏蔽</a>
+                        </div>
+                    </div>
+                    <div class="box-inner">
+                        <div style="text-align: center">
+                            <a href="#" class="super normal button">一键清除用户屏蔽</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="main-content">
+                <div class="h20"></div>
+                <div class="box">
+                    <div class="box-inner" id="tabs" style="background-color: #fff; border-top-left-radius: 3px; border-top-right-radius: 3px;">
+                        <a href="#" class="tab_current">分类1</a>
+                        <a href="#" class="tab">分类2</a>
+                        <a href="#" class="tab">分类3</a>
+                        <a href="#" class="tab">分类4</a>
+                        <a href="#" class="tab">分类5</a>
+                    </div>
+                    <div class="box-cell" style="background-color: #f9f9f9; padding: 10px 10px 10px 20px;">
+                        <a href="#" class="node">节点1</a>
+                        <a href="#" class="node">节点2</a>
+                        <a href="#" class="node">节点3</a>
+                        <a href="#" class="node">节点4</a>
+                        <a href="#" class="node">节点5</a>
+                        <a href="#" class="node">节点6</a>
+                        <a href="#" class="node">节点7</a>
+                    </div>
+                    <div class="box-cell box-item" style="border-top-left-radius: 3px; border-top-right-radius: 3px;">
+                        <div style="position: absolute; margin: -10px -10px 0 650px;"></div>
+                        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                            <tbody>
+                            <tr>
+
+                                <td width="48" valign="top" align="center">
+                                    <a href="#">
+                                        <img
+                                        src="//cdn.v2ex.com/avatar/d2f5/3008/20948_normal.png?m=1380207520" class="box-avatar" border="0"
+                                        align="default">
+                                    </a>
+                                </td>
+                                <td width="10"></td>
+
+                                <td width="auto" valign="middle">
+                                    <span class="box-item-title">
+                                        <a href="#">为啥我的 pro 更新到 10.9.5还是显示 10.9.3</a>
+                                    </span>
+                                    <div class="h5"></div>
+                                    <span class="box-small box-fade">
+                                        <div class="box-votes"></div>
+                                        <a class="box-node" href="#">Mac OS X</a>
+                                        &nbsp;•&nbsp;
+                                        <strong>
+                                            <a href="#">erse</a>
+                                        </strong> &nbsp;•&nbsp; 37 分钟前 &nbsp;•&nbsp; 最后回复来自
+                                        <strong>
+                                            <a href="#">chuxiwen</a>
+                                        </strong>
+                                    </span>
+                                </td>
+                                <td width="50" align="right" valign="middle">
+                                    <a href="test1#" class="box-count-livid">1</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="box-cell box-item">
+                        <div style="position: absolute; margin: -10px -10px 0 650px;"></div>
+                        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                            <tbody>
+                            <tr>
+
+                                <td width="48" valign="top" align="center">
+                                    <a href="#">
+                                        <img
+                                                src="//cdn.v2ex.com/avatar/d2f5/3008/20948_normal.png?m=1380207520" class="box-avatar" border="0"
+                                                align="default">
+                                    </a>
+                                </td>
+                                <td width="10"></td>
+
+                                <td width="auto" valign="middle">
+                                    <span class="box-item-title">
+                                        <a href="#">为啥我的 pro 更新到 10.9.5还是显示 10.9.3</a>
+                                    </span>
+                                    <div class="h5"></div>
+                                    <span class="box-small box-fade">
+                                        <div class="box-votes"></div>
+                                        <a class="box-node" href="#">Mac OS X</a>
+                                        &nbsp;•&nbsp;
+                                        <strong>
+                                            <a href="#">erse</a>
+                                        </strong> &nbsp;•&nbsp; 37 分钟前 &nbsp;•&nbsp; 最后回复来自
+                                        <strong>
+                                            <a href="#">chuxiwen</a>
+                                        </strong>
+                                    </span>
+                                </td>
+                                <td width="50" align="right" valign="middle">
+                                    <a href="test2#" class="box-count-livid">1</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="box-inner box-item">
+                        <span class="box-chevron">→</span>
+                        <a href="#">更多新主题</a>
+                    </div>
+                </div>
+                <div class="h20"></div>
+                <div class="box">
+                    <div class="box-cell">
+                        <div class="box-fr"><a href="#">浏览全部节点</a></div>
+                        <span class="box-fade"><strong>V2EX</strong> / 节点导航</span>
+                    </div>
+                    <div class="box-cell">
+                        <table cellpadding="0" cellspacing="0" border="0">
+                            <tbody>
+                                <tr>
+                                    <td align="right" width="60">
+                                        <span class="box-fade">分类1</span>
+                                    </td>
+                                    <td style="line-height: 200%; padding-left: 10px;">
+                                        <a href="#" style="font-size: 14px;">节点1</a>&nbsp; &nbsp;
+                                        <a href="#" style="font-size: 14px;">节点2</a>&nbsp; &nbsp;
+                                        <a href="#" style="font-size: 14px;">节点3</a>&nbsp; &nbsp;
+                                        <a href="#" style="font-size: 14px;">节点4</a>&nbsp; &nbsp;
+                                        <a href="#" style="font-size: 14px;">节点5</a>&nbsp; &nbsp;
+                                        <a href="#" style="font-size: 14px;">节点6</a>&nbsp; &nbsp;
+                                        <a href="#" style="font-size: 14px;">节点7</a>&nbsp; &nbsp;
+                                        <a href="#" style="font-size: 14px;">节点8</a>&nbsp; &nbsp;
+                                        <a href="#" style="font-size: 14px;">节点9</a>&nbsp; &nbsp;
+                                        <a href="#" style="font-size: 14px;">节点10</a>&nbsp; &nbsp;
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="box-cell">
+                        <table cellpadding="0" cellspacing="0" border="0">
+                            <tbody>
+                            <tr>
+                                <td align="right" width="60">
+                                    <span class="box-fade">分类2</span>
+                                </td>
+                                <td style="line-height: 200%; padding-left: 10px;">
+                                    <a href="#" style="font-size: 14px;">节点1</a>&nbsp; &nbsp;
+                                    <a href="#" style="font-size: 14px;">节点2</a>&nbsp; &nbsp;
+                                    <a href="#" style="font-size: 14px;">节点3</a>&nbsp; &nbsp;
+                                    <a href="#" style="font-size: 14px;">节点4</a>&nbsp; &nbsp;
+                                    <a href="#" style="font-size: 14px;">节点5</a>&nbsp; &nbsp;
+                                    <a href="#" style="font-size: 14px;">节点6</a>&nbsp; &nbsp;
+                                    <a href="#" style="font-size: 14px;">节点7</a>&nbsp; &nbsp;
+                                    <a href="#" style="font-size: 14px;">节点8</a>&nbsp; &nbsp;
+                                    <a href="#" style="font-size: 14px;">节点9</a>&nbsp; &nbsp;
+                                    <a href="#" style="font-size: 14px;">节点10</a>&nbsp; &nbsp;
+                                    <a href="#" style="font-size: 14px;">节点11</a>&nbsp; &nbsp;
+                                    <a href="#" style="font-size: 14px;">节点12</a>&nbsp; &nbsp;
+                                    <a href="#" style="font-size: 14px;">节点13</a>&nbsp; &nbsp;
+                                    <a href="#" style="font-size: 14px;">节点14</a>&nbsp; &nbsp;
+                                    <a href="#" style="font-size: 14px;">节点15</a>&nbsp; &nbsp;
+                                    <a href="#" style="font-size: 14px;">节点16</a>&nbsp; &nbsp;
+                                    <a href="#" style="font-size: 14px;">节点17</a>&nbsp; &nbsp;
+                                    <a href="#" style="font-size: 14px;">节点18</a>&nbsp; &nbsp;
+                                    <a href="#" style="font-size: 14px;">节点19</a>&nbsp; &nbsp;
+                                    <a href="#" style="font-size: 14px;">节点20</a>&nbsp; &nbsp;
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="box-inner">
+                        <table cellpadding="0" cellspacing="0" border="0">
+                            <tbody>
+                            <tr>
+                                <td align="right" width="60">
+                                    <span class="box-fade">分类3</span>
+                                </td>
+                                <td style="line-height: 200%; padding-left: 10px;">
+                                    <a href="#" style="font-size: 14px;">节点1</a>&nbsp; &nbsp;
+                                    <a href="#" style="font-size: 14px;">节点2</a>&nbsp; &nbsp;
+                                    <a href="#" style="font-size: 14px;">节点3</a>&nbsp; &nbsp;
+                                    <a href="#" style="font-size: 14px;">节点4</a>&nbsp; &nbsp;
+                                    <a href="#" style="font-size: 14px;">节点5</a>&nbsp; &nbsp;
+                                    <a href="#" style="font-size: 14px;">节点6</a>&nbsp; &nbsp;
+                                    <a href="#" style="font-size: 14px;">节点7</a>&nbsp; &nbsp;
+                                    <a href="#" style="font-size: 14px;">节点8</a>&nbsp; &nbsp;
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="c"></div>
+        <div class="h20"></div>
+    </div>
+    <div id="body-footer">
+        <div class="content">
+            <div class="box-inner" style="text-align: center;">
+                蓝房子
+                &nbsp;&nbsp;&nbsp;&nbsp;©版权所有
+            </div>
+        </div>
+    </div>
+</body>
+</html>
