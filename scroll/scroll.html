@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script>
+        $(function(){
+            var arr = [];
+            var box = $("#scroll_box");
+            box.find("li.scroll_item").each(function(index,value){
+               arr.push($(this).offset().top);
+            });
+            console.log(arr);
+            var computeLeftIndex = function(){
+                var index = -1;
+                var top = $(document).scrollTop();
+                var group = $("#ico-group-0");
+                var box = $("#scroll_box");
+
+                if(top<arr[0]){
+                    group.find(".list-icon-link").attr("style","display:none");
+                    box.find(".scroll_item").find(".list-icon").attr("style","display:block");
+                    return ;
+                }
+                for(var i=0;i<arr.length;i++){
+                    if(top<arr[i]-i*32){
+                        index = i;
+                        break;
+                    }
+                }
+                var hiddenIndex = 0;
+                var num =0;
+                if(index==-1){
+                    index = arr.length;
+
+                    var current = box.find(".scroll_item:eq("+(index-1)+")");
+                    num = Math.floor((current.offset().top+current.height()-top)/32);
+                    hiddenIndex = arr.length-num<0?0:arr.length-num;
+
+                }
+                var position = index-1;
+
+                group.find(".list-icon-link:lt("+position+")").attr("style","display:block");
+                group.find(".list-icon-link:gt("+position+")").attr("style","display:none");
+
+                group.find(".list-icon-link").removeClass("list-icon-current");
+                group.find(".list-icon-link:eq("+position+")").addClass("list-icon-current").attr("style","display:block");
+
+
+                if(hiddenIndex >= arr.length){
+                    group.find(".list-icon-link").attr("style","display:none");
+                }else{
+                    group.find(".list-icon-link:lt("+hiddenIndex+")").attr("style","display:none");
+                }
+
+
+
+                console.log(index);
+                box.find(".scroll_item:lt("+index+")").find(".list-icon").attr("style","display:none");
+                box.find(".scroll_item:gt("+index+")").find(".list-icon").attr("style","display:block");
+                box.find(".scroll_item:eq("+index+")").find(".list-icon").attr("style","display:block");
+            };
+            $(window).resize(function(e){
+                console.log("111");
+                $("#order-group").css("left",box.offset().left-18);
+
+            });
+
+            $(document).scroll(function(e){
+                $("#order-group").css("left",box.offset().left-18);
+                computeLeftIndex();
+
+                $("#ico-group-0").find("a").click(function(e){
+                    e.preventDefault();
+                    var index = $(this).html();
+
+                    $(document).scrollTop($("#item_"+index).offset().top);
+                });
+            });
+
+        });
+    </script>
+    <style>
+        .list-icon {
+            width: 32px;
+            height: 32px;
+            position: absolute;
+            left: -18px;
+            top:0;
+            font-size: 16px;
+            color: #efe;
+            text-align: center;
+            line-height: 32px;
+            background: url(images/step_ol_bg.png) no-repeat;
+            _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale, src="images/step_ol_bg.png");
+            _background: 0 0;
+        }
+
+        .list-icon-link {
+            width: 32px;
+            height: 34px;
+            display: block;
+            font-size: 16px;
+            text-decoration: none;
+            cursor: pointer;
+            color: #fff;
+            text-align: center;
+            line-height: 32px;
+            background: url(images/step_ico_bg.png) no-repeat 0 -68px;
+        }
+        .list-icon-link:hover {
+            background-position: 0 0;
+            text-decoration: none;
+        }
+        .list-icon-current {
+            background-position: 0 0;
+        }
+        a{
+            font:12px/1.5 arial,"\5b8b\4f53",sans-serif;
+        }
+        body{
+            margin: 0;
+            padding: 0;
+            word-break: break-all;
+            font: 12px/1.5 arial,"\5b8b\4f53",sans-serif;
+            background: #fff;
+        }
+        .scroll_wrapper{
+            display: block;
+            margin: 0 auto;
+            width:auto;
+        }
+        ul,li{
+            list-style: none;
+            margin:0;
+            padding:0;
+        }
+        .scroll_item{
+            display: block;
+            padding:0 16px;
+            border-left:2px dotted #e4e4e4;
+            position: relative;
+        }
+        #order-group{
+            width: 32px;
+            visibility: visible;
+            position: fixed;
+            top: 0;
+            left: -10000px;
+            z-index:10000;
+        }
+    </style>
+</head>
+<body>
+<div style="height:50px">top info</div>
+<div class="scroll_wrapper">
+    <div id="order-group">
+        <div class="order-ico-group" id="ico-group-0" style="display: block;">
+            <a class="list-icon-link list-icon-current" title="点击返回第1步" style="display: none;">1</a>
+            <a class="list-icon-link" title="点击返回第2步" style="display: none;">2</a>
+            <a class="list-icon-link" title="点击返回第3步" style="display: none;">3</a>
+            <a class="list-icon-link" title="点击返回第4步" style="display: none;">4</a>
+            <a class="list-icon-link" title="点击返回第5步" style="display: none;">5</a>
+            <a class="list-icon-link" title="点击返回第6步" style="display: none;">6</a>
+            <a class="list-icon-link" title="点击返回第7步" style="display: none;">7</a>
+        </div>
+    </div>
+
+    <div style="height:auto;width:auto;margin:0 auto;position:relative;left:158px;">
+        <ul id="scroll_box">
+            <li class="scroll_item" id="item_1">
+                <div class="list-icon">1</div>
+                <div class="list-item-text">
+                    01
+                    <br>1
+                    <br>2
+                    <br>3
+                    <br>4
+                    <br>5
+                    <br>6
+                    01
+                    <br>1
+                    <br>2
+                    <br>3
+                    <br>4
+                    <br>5
+                    <br>6
+                </div>
+                <div class="list-item-media">图片</div>
+            </li>
+            <li class="scroll_item" id="item_2">
+                <div class="list-icon">2</div>
+                <div class="list-item-text">
+                    02
+                    <br>1
+                    <br>2
+                    <br>3
+                    <br>4
+                    <br>5
+                    <br>6
+                    02
+                    <br>1
+                    <br>2
+                    <br>3
+                    <br>4
+                    <br>5
+                    <br>6
+                </div>
+                <div class="list-item-media">图片</div>
+            </li>
+            <li class="scroll_item" id="item_3">
+                <div class="list-icon">3</div>
+                <div class="list-item-text">
+                    03
+                    <br>1
+                    <br>2
+                    <br>3
+                    <br>4
+                    <br>5
+                    <br>6
+                    03
+                    <br>1
+                    <br>2
+                    <br>3
+                    <br>4
+                    <br>5
+                    <br>6
+                </div>
+                <div class="list-item-media">图片</div>
+            </li>
+            <li class="scroll_item" id="item_4">
+                <div class="list-icon">4</div>
+                <div class="list-item-text">
+                    04
+                    <br>1
+                    <br>2
+                    <br>3
+                    <br>4
+                    <br>5
+                    <br>6
+                    04
+                    <br>1
+                    <br>2
+                    <br>3
+                    <br>4
+                    <br>5
+                    <br>6
+                </div>
+                <div class="list-item-media">图片</div>
+            </li>
+            <li class="scroll_item" id="item_5">
+                <div class="list-icon">5</div>
+                <div class="list-item-text">
+                    05
+                    <br>1
+                    <br>2
+                    <br>3
+                    <br>4
+                    <br>5
+                    <br>6
+                    05
+                    <br>1
+                    <br>2
+                    <br>3
+                    <br>4
+                    <br>5
+                    <br>6
+                </div>
+                <div class="list-item-media">图片</div>
+            </li>
+            <li class="scroll_item" id="item_6">
+                <div class="list-icon">6</div>
+                <div class="list-item-text">
+                    06
+                    <br>1
+                    <br>2
+                    <br>3
+                    <br>4
+                    <br>5
+                    <br>6
+                    06
+                    <br>1
+                    <br>2
+                    <br>3
+                    <br>4
+                    <br>5
+                    <br>6
+                </div>
+                <div class="list-item-media">图片</div>
+            </li>
+            <li class="scroll_item" id="item_7">
+                <div class="list-icon">7</div>
+                <div class="list-item-text">
+                    07
+                    <br>1
+                    <br>2
+                    <br>3
+                    <br>4
+                    <br>5
+                    <br>6
+                    07
+                    <br>1
+                    <br>2
+                    <br>3
+                    <br>4
+                    <br>5
+                    <br>6
+                </div>
+                <div class="list-item-media">图片</div>
+            </li>
+
+        </ul>
+
+    </div>
+</div>
+
+<div style="height:500px;background: red;">footer</div>
+
+</body>
+</html>
